@@ -10,14 +10,5 @@ model = init_chat_model(
     model='claude-haiku-5-5',
 )
 
-conversation = [
-    SystemMessage('You are a helpful asssistant for question regrading programming.'),
-    HumanMessage('What is python ?'),
-    AIMessage('Python is an interpreted programming language.'),
-    HumanMessage('What was it released ?')
-]
-
-response = model.invoke(conversation)
-
-print(response)
-print(response.text)
+for chunk in model.stream('What is python ?'):
+    print(chunk.text, end='', flush=True)
